@@ -1,16 +1,8 @@
 # ----------------------------------------------------------------------#
 # CALL RECOGNISER: KANGAROO ISLAND GLOSSY BLACK-COCKATOO
 # This script uses Binary Point Matching from the package monitoR
-# Updated from D. Teixeira PhD to improve template selection and testing
 # Script written by D. Teixeira & S. Linke
 # ----------------------------------------------------------------------#
-
-# Set working directory
-setwd("C:\\Users\\danie\\Google Drive\\PhD\\Data and analysis\\Recogniser nestling and adults\\KI GBC")
-
-# Garbage collection
-rm(list=ls()) #removes everything done to date
-gc(reset=T)
 
 # -----------------------------------------------------------------#
 # RECOGNISER
@@ -19,12 +11,7 @@ gc(reset=T)
 # Load packages
 library(monitoR)
 library(tuneR)
-#library(RODBC)
 library(seewave)
-# library(lubridate)
-# library(reshape2)
-# library(dplyr)
-# library(ggplot2)
 
 # Load the template stack
 load(".\\GBC_Final_Stack.Rdata")
@@ -32,8 +19,8 @@ btemps <- runnertemps
 btemps
 
 # Set the filepath to the surveys you want to run the recogniser on
-directory <- "C:\\Users\\danie\\Google Drive\\PhD\\Data and analysis\\Recogniser nestling and adults\\KI GBC\\Surveys\\Batch"
-surveys <- list.files(directory, pattern=".wav", full.names = TRUE, recursive = TRUE) # Need recursive = TRUE to read all wav files in folders
+directory <- ".\\Surveys\\Batch"
+surveys <- list.files(directory, pattern=".wav", full.names = TRUE, recursive = TRUE)
 surveys
 
 # Run the recogniser
