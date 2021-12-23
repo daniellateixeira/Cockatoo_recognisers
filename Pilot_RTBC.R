@@ -5,13 +5,6 @@
 # Script written by D. Teixeira & S. Linke
 # -----------------------------------------------------------------#
 
-# Set working directory
-setwd("C:\\Users\\danie\\Google Drive\\PhD\\Data and analysis\\Recogniser nestling and adults\\SE RTBC\\Pilot")
-
-# Garbage collection
-rm(list=ls()) #removes everything done to date
-gc(reset=T)
-
 # -----------------------------------------------------------------#
 # RECOGNISER
 # -----------------------------------------------------------------#
@@ -26,7 +19,9 @@ library(dplyr)
 library(ggplot2)
 
 
-# --------------------------- UPDATED: TEMPLATE CREATOR --------------------------- ####
+# --------------------------- TEMPLATE CREATOR --------------------------- ####
+
+# This script makes templates from the sound clips
 
 templatestack <- "RTBC_templates_pilot"
 ref_filelist <- as.data.frame(list.files(pattern=".wav"))
@@ -35,8 +30,6 @@ NoOfRefcalls <- length(ref_filelist)
 templatename <- list()
 bpmlist <- list()
 bpmlist2 <- list()
-#callno<-4
-#ref_filelist[callno]
 
 cutoff_increments<-c(-2,0,2) #amplification cutoff modifier
 #cutoff_increments<-c(0) #amplification cutoff modifier
@@ -46,7 +39,7 @@ newCols <- colsplit(ref_filelist, "_", refcolnames)
 templatenum <- 0
 #pdf(paste((stackname),".pdf", sep=""), width=4, height=4)
 
-# Loop to convert all templates to mono and 44.1kHz sample rate and creat binTemplates
+# Loop to convert all templates to mono and 44.1kHz sample rate and create binTemplates
 for(callno in 1:NoOfRefcalls){
   detectsamplerate <- readWave(ref_filelist[callno], header=TRUE)
   convflag <- 1
@@ -85,7 +78,7 @@ for(callno in 1:NoOfRefcalls){
 unlink("refcall_in.wav")  
 dev.off()
 
-# --------------------------- UPDATED: TEMPLATE STACK BUILDER --------------------------- ####
+# --------------------------- TEMPLATE STACK BUILDER --------------------------- ####
 
 # makeBinTemplate converts time-domain data into binary i.e. cells are "on" or "off"
 # Depending on whether they are greater than or less than the user-set amp.cutoff
@@ -105,13 +98,13 @@ for(callno in 2:NoOfTemps){ #loop to template number, starting from 2
 }
 
 # Change the threshold score cut-off
-templateCutoff(btemps) <- c(default = 20)
-#templateCutoff(btemps) <- c(9.4,9.8,13.4,8.4,7.4) # Specify unique cutoff for each template
+#templateCutoff(btemps) <- c(default = 20)
+templateCutoff(btemps) <- c(9.4,9.8,13.4,8.4,7.4) # Specify unique cutoff for each template
 btemps
 
 save(btemps,file=paste(templatestack,".Rdata", sep=""))
 
-# --------------------------- UPDATED: BPM DETECTION BATCH FILES ----------- ####
+# --------------------------- BPM DETECTION BATCH FILES ----------- ####
 
 # Load the template stack
 load(".\\RTBC_templates_pilot.Rdata")
@@ -120,7 +113,7 @@ load(".\\RTBC_templates_pilot.Rdata")
 templateCutoff(btemps) <- c(default = 5)
 btemps
 
-directory <- "C:\\Users\\danie\\Google Drive\\PhD\\Data and analysis\\Recogniser nestling and adults\\SE RTBC\\Pilot\\Pilot surveys"
+directory <- ".\\SE RTBC\\Pilot\\Pilot surveys"
 surveys <- list.files(directory, pattern=".wav", full.names = TRUE) # Need recursive = TRUE to read all wav files in folders
 surveys
 
@@ -185,7 +178,7 @@ for(i in 1:length(surveys)){
   
 } 
 
-# --------------------------- UPDATED: EVALUATOR AND SCORE CUTOFF DETERMINATION ---- ####
+# --------------------------- EVALUATOR AND SCORE CUTOFF DETERMINATION ---- ####
 
 # Create list of all templates and all survey files
 
