@@ -8,15 +8,11 @@ library(ggplot2)
 rm(list=ls()) #removes everything done to date
 gc(reset=T)
 
-# Set working directory
-setwd("C:/Users/danie/Google Drive/PhD/Data and analysis/Recogniser nestling and adults/SE RTBC/Surveys")
 
 # Data ####
-
 rtbc <- read.csv("./Data_combined_RTBC.csv")
 
 # FLEDGED NESTS ####
-
 
 fledged <- rtbc %>% filter(Outcome == "Fledged") %>% droplevels()
 str(fledged)
@@ -102,7 +98,7 @@ sum7 <-unsure %>% group_by(Time, Verify) %>%
 sum7
 write.csv(sum7, "./RTBC_unsure_sum7.csv")
 
-# To caluclate percentage of true positics for nestling & adults
+# To caluclate percentage of true positives for nestling & adults
 sum8 <- unsure %>% group_by(Time, RTBC) %>%
   summarise(n=n()) %>%
   mutate(freq = n / sum(n))
@@ -338,7 +334,7 @@ fig14 <- ggplot(rtbcsum2, aes(x=Time, y = mean_verify, fill = Verify)) +
   theme_classic()+
   geom_bar(stat = "identity", width=.5, position = position_dodge(preserve = "single"),colour="black") + # plot as proportion
   xlab("")+
-  ylab("Detections (mean ± SE)\n") +
+  ylab("Detections (mean Â± SE)\n") +
   scale_y_continuous(limits = c(0,125), breaks = seq(0,125, by = 25)) +
   scale_fill_discrete(name = "", labels = c("FP","TP"))+ # Remove legend title and change names
   geom_errorbar(aes(ymax = rtbcsum2$mean_verify + rtbcsum2$se, ymin = rtbcsum2$mean_verify - rtbcsum2$se), position = position_dodge(0.5), width = 0.25) + # Plots the error bars. Remove - data$SE if you only want top bar.
@@ -370,7 +366,7 @@ fig15 <- ggplot(rtbcsum4, aes(x=Time, y = mean_RTBC, fill = RTBC)) +
   theme_classic()+
   geom_bar(stat = "identity", width=.5, position = "dodge",colour="black") + # plot as proportion
   xlab("")+
-  ylab("Detections (mean ± SE)\n") +
+  ylab("Detections (mean Â± SE)\n") +
   scale_y_continuous(limits = c(0,125), breaks = seq(0,125, by = 25)) +
   scale_fill_discrete(name = "", labels = c("FP","TP"))+ # Remove legend title and change names
   geom_errorbar(aes(ymax = rtbcsum4$mean_RTBC + rtbcsum4$se, ymin = rtbcsum4$mean_RTBC - rtbcsum4$se), position = position_dodge(0.5), width = 0.25) + # Plots the error bars. Remove - data$SE if you only want top bar.
