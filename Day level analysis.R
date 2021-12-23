@@ -1,27 +1,18 @@
 
 # Day-level recogniser analysis
 
+# Install packages
 library(dplyr)
 library(ggplot2)
 
 # Garbage collection
-rm(list=ls()) #removes everything done to date
+rm(list=ls())
 gc(reset=T)
 
-# Set working directory
-setwd("C:/Users/danie/Google Drive/PhD/Data and analysis/Recogniser nestling and adults")
-
-# Data
+# Data import and filter
 data <- read.csv("./Day_level_UPDATED.csv")
-data$Verified <- as.factor(data$Verified)
-levels(data$Verified)
-levels(data$Verified)[levels(data$Verified)=="Y - TP"] <- "y - TP"
-levels(data$Verified)[levels(data$Verified)=="Y - FP"] <- "y - FP"
-levels(data$Verified)[levels(data$Verified)=="Y - FP and FN"] <- "y - FP and FN"
-
 gbc <- data %>% filter(Species == "KI GBC") %>% droplevels()
 rtbc <- data %>% filter(Species == "SE RTBC") %>% droplevels()
-
 
 # Summarise GBC
 gbc_sum <- gbc %>% group_by(Verified) %>%
