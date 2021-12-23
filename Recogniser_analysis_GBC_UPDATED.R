@@ -8,11 +8,7 @@ library(ggplot2)
 rm(list=ls()) #removes everything done to date
 gc(reset=T)
 
-# Set working directory
-setwd("C:/Users/danie/Google Drive/PhD/Data and analysis/Recogniser nestling and adults/KI GBC/Surveys")
-
 # Data ####
-
 gbc <- read.csv("./Data_combined_GBC_Updated.csv")
 
 # FLEDGED NESTS ####
@@ -39,7 +35,7 @@ sum1 <- fledged %>% group_by(Time, Verify) %>%
 sum1
 write.csv(sum1, "./GBC_fledged_sum1.csv")
 
-# To caluclate percentage of true positics for nestling & adults
+# To caluclate percentage of true positives for nestling & adults
 sum2 <- fledged %>% group_by(Time, GBC) %>%
   summarise(n=n()) %>%
   mutate(freq = n / sum(n))
@@ -70,7 +66,7 @@ sum4 <- failed %>% group_by(Time, Verify) %>%
 sum4
 write.csv(sum4, "./GBC_failed_sum4.csv")
 
-# To caluclate percentage of true positics for nestling & adults
+# To caluclate percentage of true positives for nestling & adults
 sum5 <- failed %>% group_by(Time, GBC) %>%
   summarise(n=n()) %>%
   mutate(freq = n / sum(n))
@@ -101,7 +97,7 @@ sum7 <-unsure %>% group_by(Time, Verify) %>%
 sum7
 write.csv(sum7, "./GBC_unsure_sum7.csv")
 
-# To caluclate percentage of true positics for nestling & adults
+# To caluclate percentage of true positives for nestling & adults
 sum8 <- unsure %>% group_by(Time, GBC) %>%
   summarise(n=n()) %>%
   mutate(freq = n / sum(n))
@@ -374,7 +370,7 @@ fig14 <- ggplot(gbcsum2, aes(x=Time, y = mean_verify, fill = Verify)) +
   theme_classic()+
   geom_bar(stat = "identity", width=.5, position = "dodge",colour="black") + # plot as proportion
   xlab("")+
-  ylab("Detections (mean ± SE)\n") +
+  ylab("Detections (mean Â± SE)\n") +
   scale_y_continuous(limits = c(0,125), breaks = seq(0,125, by = 25)) +
   scale_fill_discrete(name = "", labels = c("FP","TP"))+ # Remove legend title and change names
   geom_errorbar(aes(ymax = gbcsum2$mean_verify + gbcsum2$se, ymin = gbcsum2$mean_verify - gbcsum2$se), position = position_dodge(0.5), width = 0.25) + # Plots the error bars. Remove - data$SE if you only want top bar.
@@ -406,7 +402,7 @@ fig15 <- ggplot(gbcsum4, aes(x=Time, y = mean_GBC, fill = GBC)) +
   theme_classic()+
   geom_bar(stat = "identity", width=.5, position = "dodge",colour="black") + # plot as proportion
   xlab("")+
-  ylab("Detections (mean ± SE)\n") +
+  ylab("Detections (mean Â± SE)\n") +
   scale_y_continuous(limits = c(0,125), breaks = seq(0,125, by = 25)) +
   scale_fill_discrete(name = "", labels = c("FP","TP"))+ # Remove legend title and change names
   geom_errorbar(aes(ymax = gbcsum4$mean_GBC + gbcsum4$se, ymin = gbcsum4$mean_GBC - gbcsum4$se), position = position_dodge(0.5), width = 0.25) + # Plots the error bars. Remove - data$SE if you only want top bar.
