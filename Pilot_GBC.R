@@ -3,16 +3,7 @@
 # This script uses Binary Point Matching from the package monitoR
 # Updated from D. Teixeira PhD to include adult calls
 # Script written by D. Teixeira & S. Linke
-# UPDATED Scripts are the improved scripts for template building and 
-# template evaluation
 # -----------------------------------------------------------------#
-
-# Set working directory
-setwd("C:\\Users\\danie\\Google Drive\\PhD\\Data and analysis\\Recogniser nestling and adults\\KI GBC\\Pilot")
-
-# Garbage collection
-rm(list=ls()) #removes everything done to date
-gc(reset=T)
 
 # -----------------------------------------------------------------#
 # RECOGNISER
@@ -28,7 +19,7 @@ library(reshape2)
 library(dplyr)
 library(ggplot2)
 
-# --------------------------- UPDATED: TEMPLATE CREATOR --------------------------- ####
+# --------------------------- TEMPLATE CREATOR --------------------------- ####
 
 # This script makes templates from the sound clips
 
@@ -39,8 +30,6 @@ NoOfRefcalls <- length(ref_filelist)
 templatename <- list()
 bpmlist <- list()
 bpmlist2 <- list()
-#callno<-4
-#ref_filelist[callno]
 
 cutoff_increments<-c(-2,0,2) #amplification cutoff modifier
 #cutoff_increments<-c(0) #amplification cutoff modifier
@@ -89,7 +78,7 @@ for(callno in 1:NoOfRefcalls){
 unlink("refcall_in.wav")  
 dev.off()
 
-# --------------------------- UPDATED: TEMPLATE STACK BUILDER --------------------------- ####
+# --------------------------- TEMPLATE STACK BUILDER --------------------------- ####
 
 # This script combines templates into a stack that can be read in and used in the recogniser
 
@@ -111,14 +100,13 @@ for(callno in 2:NoOfTemps){ #loop to template number, starting from 2
 }
 
 # Change the threshold score cut-off
-templateCutoff(btemps) <- c(default = 20)
-#templateCutoff(btemps) <- c(9.4,9.8,13.4,8.4,7.4) # Specify unique cutoff for each template
+#templateCutoff(btemps) <- c(default = 20)
+templateCutoff(btemps) <- c(9.4,9.8,13.4,8.4,7.4) # Specify unique cutoff for each template
 btemps
 
 save(btemps,file=paste(templatestack,".Rdata", sep=""))
 
-
-# --------------------------- UPDATED: BPM DETECTION BATCH FILES ----------- ####
+# --------------------------- BPM DETECTION BATCH FILES ----------- ####
 
 # Load the template stack
 load(".\\GBC_templates_pilot.Rdata")
@@ -127,7 +115,7 @@ load(".\\GBC_templates_pilot.Rdata")
 templateCutoff(btemps) <- c(default = 5)
 btemps
 
-directory <- "C:\\Users\\danie\\Google Drive\\PhD\\Data and analysis\\Recogniser nestling and adults\\KI GBC\\Pilot\\Pilot surveys"
+directory <- ".\\KI GBC\\Pilot\\Pilot surveys"
 surveys <- list.files(directory, pattern=".wav", full.names = TRUE) # Need recursive = TRUE to read all wav files in folders
 surveys
 
@@ -192,7 +180,7 @@ for(i in 1:length(surveys)){
   
 } 
 
-# --------------------------- UPDATED: EVALUATOR AND SCORE CUTOFF DETERMINATION ---- ####
+# --------------------------- EVALUATOR AND SCORE CUTOFF DETERMINATION ---- ####
 
 # Create list of all templates and all survey files
 
