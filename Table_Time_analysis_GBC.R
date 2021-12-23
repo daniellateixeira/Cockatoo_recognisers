@@ -1,6 +1,5 @@
 # GBC recogniser analysis
 # Table x (Time)
-# Excluding nestling this time (c.f. what was in my thesis)
 
 library(dplyr)
 
